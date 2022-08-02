@@ -1,0 +1,75 @@
+{
+  "users": [{
+    "id": 1,
+    "name": "Federico",
+    "email": "federico@federico.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 2,
+    "name": "Admin",
+    "email": "admin@admin.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "ADMIN"
+  }, {
+    "id": 3,
+    "name": "Juan",
+    "email": "juan@juan.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 4,
+    "name": "Federico",
+    "email": "federico+limit-warning-per-day@federico.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 5,
+    "name": "Admin Manage Food",
+    "email": "admin+manage-food-entries@admin.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "ADMIN"
+  }, {
+    "id": 6,
+    "name": "Juan Manage Food",
+    "email": "juan+manage-food-entries@juan.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 7,
+    "name": "Federico Manage Food",
+    "email": "federico+manage-food-entries@federico.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 8,
+    "name": "Admin Reporting",
+    "email": "admin+reporting@admin.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "ADMIN"
+  }, {
+    "id": 9,
+    "name": "User Reporting 1",
+    "email": "user+reporting+1@user.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 10,
+    "name": "User Reporting 2",
+    "email": "user+reporting+2@user.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 11,
+    "name": "User Price Warning 2",
+    "email": "user+price+warning@user.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }, {
+    "id": 12,
+    "name": "User Filtering dates",
+    "email": "user+filtering-dates@user.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
+  }]
+}
