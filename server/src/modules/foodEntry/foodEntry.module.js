@@ -6,7 +6,6 @@ const FoodEntryService = require('./foodEntry.service');
 const { getFoodEntryListRoute, createFoodEntryRoute, getOneFoodEntryRoute, updateFoodEntryRoute, deleteFoodEntryRoute } = require('./express/routes');
 const { secureUrlMidleware } = require('../auth/express/midlewares');
 const AuthService = require('../auth/auth.service');
-const { validateCreationPermison } = require('./utils');
 
 const basePath = '/food-entry'
 
@@ -17,21 +16,11 @@ const FoodEntryModule = (app) => {
 
   app.use(`${basePath}`, secureUrlMidleware({ authService }))
 
-  // app.get(`${basePath}`, [
-  //   getFoodEntryListRoute({ foodEntryService })
-  // ])
-
   app.post(`${basePath}`, [
     bodyParser.json(),
-    body('calories').exists(),
-    body('calories').isDecimal(),
+    body('calories').exists().isDecimal(),
     body('name').exists(),
-    body('price').exists(),
-    body('price').isDecimal(),
-    body('userId').exists(),
-    body('userId')
-      .isNumeric()
-      .custom(validateCreationPermison),
+    body('price').exists().isDecimal(),
     body('whenFoodWasTaken').exists(),
     requestValidatorMidleware,
     createFoodEntryRoute({ foodEntryService })

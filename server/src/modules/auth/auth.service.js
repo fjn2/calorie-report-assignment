@@ -4,6 +4,7 @@
  * @property {function} rebokeToken
  * @property {function} getIsTokenReboked
  * @property {function} loginUser
+ * @property {function} listUsers
  */
 
 const { comparePassword } = require('./utils/encrypt')
@@ -90,6 +91,22 @@ const AuthService = function ({
     delete user.password
     
     return user
+  }
+
+  this.listUsers = async (userCredentials) => {
+    let users
+
+    users = await prisma.user.findMany({})
+
+    const formattedUsers = users.map((user) => {
+      delete user.password
+      delete user.invalidateBefore
+      delete user.createdAt
+      delete user.updatedAt
+      return user
+    })
+    
+    return formattedUsers
   }
 
   return this

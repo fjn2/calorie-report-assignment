@@ -91,4 +91,6 @@ describe('User should be able to manage food entries', () => {
     // Verify that the results belows to the current user
     expect(responseList.body.length).toBe(2)
   })
+  
+  it.todo('When getting the detail of a food, with an invalid id, the server should return a propper error')
 })

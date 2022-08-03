@@ -17,14 +17,17 @@ const createFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
       price: req.body.price,
       whenFoodWasTaken: req.body.whenFoodWasTaken,
       userId: +req.body.userId,
-    })
+    }, req.auth)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
         // constrain error, not addressed yet
       }
     }
-
+    if (e.isProblemSpaceError) {
+      next(new ApiError(e.message, 401))
+      return
+    }
     throw e
   }
   
@@ -53,12 +56,11 @@ const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
     newFoodEntry = await foodEntryService.update({
       id: req.params.id,
       name: req.body.name,
-      email: req.body.email,
       calories: req.body.calories,
       price: req.body.price,
       whenFoodWasTaken: req.body.whenFoodWasTaken,
       userId: +req.body.userId,
-    })
+    }, req.auth)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {

@@ -3,8 +3,8 @@ const { body } = require('express-validator');
 const { requestValidatorMidleware } = require('../../utils/express/requestValidator');
 const PrismaService = require('../prisma/prisma.service');
 const AuthService = require('./auth.service');
-const { secureUrlMidleware } = require('./express/midlewares');
-const { signupRoute, meRoute, logoutRoute, logInRoute } = require('./express/routes');
+const { secureUrlMidleware, secureUrlByRolMidleware } = require('./express/midlewares');
+const { signupRoute, meRoute, logoutRoute, logInRoute, userListRoute } = require('./express/routes');
 
 const basePath = '/auth'
 
@@ -33,6 +33,10 @@ const AuthModule = (app) => {
 
   app.get(`${basePath}/me`, secureUrlMidleware({ authService }))
   app.get(`${basePath}/me`, meRoute())
+
+  app.get(`${basePath}/users`, secureUrlMidleware({ authService }))
+  app.get(`${basePath}/users`, secureUrlByRolMidleware('ADMIN'))
+  app.get(`${basePath}/users`, userListRoute({ authService }))
 }
 
 module.exports = AuthModule

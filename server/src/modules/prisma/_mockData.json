@@ -71,5 +71,17 @@
     "email": "user+filtering-dates@user.com",
     "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
     "role": "USER"
+  },{
+    "id": 13,
+    "name": "Admin searching users",
+    "email": "admin+searching-users@admin.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "ADMIN"
+  }, {
+    "id": 14,
+    "name": "User searching users",
+    "email": "user+searching-users@user.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "USER"
   }]
 }

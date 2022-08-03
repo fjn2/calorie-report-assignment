@@ -49,7 +49,15 @@
     * @param {import('@prisma/client').FoodEntry} foodEntry Object to store
     * @returns 
     */
-   this.create = async (foodEntry) => {
+   this.create = async (foodEntry, currentUser) => {
+    if (currentUser.role === 'USER') {
+      if(foodEntry.userId && foodEntry.userId !== currentUser.userId) {
+        const error = new Error('You can not create food entries for other users')
+        error.isProblemSpaceError = true
+        throw error
+      }
+      foodEntry.userId = currentUser.userId
+    }
     const foodEntryItem = await prisma.foodEntry.create({
       data: foodEntry
     })
@@ -61,9 +69,12 @@
     * @param {import('@prisma/client').FoodEntry} foodEntry Object to store
     * @returns 
     */
-   this.update = async (foodEntry) => {
+   this.update = async ({ id, ...foodEntry}, currentUser) => {
+    if (currentUser.role === 'USER') {
+      foodEntry.userId = currentUser.userId
+    }
     const foodEntryItem = await prisma.foodEntry.update({
-      where: { id: foodEntry.id },
+      where: { id },
       data: foodEntry
     })
     return foodEntryItem

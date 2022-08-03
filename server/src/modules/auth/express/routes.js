@@ -84,10 +84,19 @@ const logoutRoute = ({ authService }) => (req, res) => {
 }
 
 const meRoute = () => (req, res) => {
-  res.send({
-    name: 'you',
-    email: 'you@email.com'
-  })
+  res.send(req.auth)
+}
+
+/**
+ * 
+ * @param {{
+ *  authService: import('../auth.service.js').AuthServiceInstance}
+ * }
+ */
+const userListRoute = ({ authService }) => async (req, res) => {
+  const users = await authService.listUsers()
+
+  res.send(users)
 }
 
 module.exports = {
@@ -95,4 +104,5 @@ module.exports = {
   logoutRoute,
   meRoute,
   signupRoute,
+  userListRoute,
 }

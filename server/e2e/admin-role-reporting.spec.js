@@ -107,9 +107,8 @@ describe('Admin role with a simple reporting', () => {
         whenFoodWasTaken: new Date('2019-02-05'),
         userId,
       })
-      // TODO this code should be 401
-      // improve the midleware requestValidator to detect each scenario
-      expect(response.status).toBe(400)
+
+      expect(response.status).toBe(401)
     })
 
     it('read food entry', async () => {
