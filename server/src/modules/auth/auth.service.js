@@ -6,8 +6,6 @@
  * @property {function} loginUser
  */
 
-const { Prisma } = require('@prisma/client')
-const { ApiError } = require('../../utils/apiError')
 const { comparePassword } = require('./utils/encrypt')
 
 /**
