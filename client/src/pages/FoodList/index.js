@@ -32,6 +32,7 @@ const FoodList = () => {
         onItemRemove={onItemRemove}
         onItemAdd={onItemAdd}
         basePath={basePath}
+        user={user}
       />
     </>
   )

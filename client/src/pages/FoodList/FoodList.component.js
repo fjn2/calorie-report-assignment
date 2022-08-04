@@ -6,6 +6,7 @@ import {
   TagsFilled,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import { USER_TYPE } from '../../utils'
 
 const { Meta } = Card
 const { Content } = Layout
@@ -14,10 +15,16 @@ const { RangePicker } = DatePicker
 const FoodCardDescription = ({
   calories,
   price,
-  whenFoodWasTaken
+  whenFoodWasTaken,
+  username
 }) => {
   return (
     <List size="small">
+      {username && (
+        <List.Item>
+          User: <b>{username}</b>
+        </List.Item>  
+      )}
       <List.Item>
         Calories: <b>{calories.toLocaleString()} cal</b>
       </List.Item>
@@ -36,7 +43,8 @@ const FoodDetailComponent = ({
   filters,
   onFilterChange,
   onItemRemove,
-  basePath
+  basePath,
+  user
 }) => {
   const onDateChange = (data) => {
     if (!data) {
@@ -84,10 +92,10 @@ const FoodDetailComponent = ({
                   okText="Yes"
                   cancelText="No"
                 >
-                  <DeleteOutlined key="delete" />,
+                  <DeleteOutlined key="delete" />
                 </Popconfirm>,
                 <Link to={`${basePath}/${item.id}`}>
-                  <EditOutlined key="edit" />,
+                  <EditOutlined key="edit" />
                 </Link>
               ]}
               key={item.id}
@@ -128,6 +136,7 @@ const FoodDetailComponent = ({
                     calories={item.calories}
                     whenFoodWasTaken={item.whenFoodWasTaken}
                     price={item.price}
+                    username={user.role === USER_TYPE.ADMIN ? item.user.name : null}
                   />}
               />
             </Card>
