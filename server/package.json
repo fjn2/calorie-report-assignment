@@ -4,10 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "pm2 start ./src/index.js --name toptal-assigment -i 3",
-    "restart": "pm2 restart toptal-assigment",
-    "stop": "pm2 stop toptal-assigment",
-    "delete": "pm2 delete toptal-assigment",
+    "start": "NODE_ENV=production pm2-runtime start ./src/index.js --name toptal-assigment -i 3",
+    "image:build": "docker build . -t toptal-assigment",
+    "image:start": "docker run -p 3333:3333 -d toptal-assigment",
     "dev": "nodemon ./src/index.js",
     "test:e2e": "jest --watchAll",
     "lint": "eslint . --ext .js"

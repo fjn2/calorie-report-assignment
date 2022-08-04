@@ -1,9 +1,13 @@
 const express = require('express')
+const path = require('path')
 const { errorHandlingMidleware } = require('./utils/express/errorHandlingMidleware')
 const { processIdMidleware } = require('./utils/express/processIdMidleware')
 const cors = require('cors')
+
 // Load env variables
-require('dotenv').config()
+require('dotenv').config({
+  path: path.resolve(process.cwd(), process.env.NODE_ENV === 'production' ? '.env.production' : '.env')
+})
 
 const port = process.env.APP_PORT
 
@@ -31,5 +35,5 @@ app.use(processIdMidleware)
 app.use(errorHandlingMidleware)
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+  console.log(`App listening on port ${port}. pid: ${process.pid}`)
 })
