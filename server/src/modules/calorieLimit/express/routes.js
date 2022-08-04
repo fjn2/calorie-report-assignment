@@ -1,6 +1,3 @@
-const { Prisma } = require('@prisma/client')
-const { ApiError } = require('../../../utils/apiError.js')
-
 /**
  * 
  * @param {{
@@ -14,6 +11,8 @@ const getCalorieWarningListRoute = ({ calorieLimitService }) => async (req, res)
     // add user id in the request to restrict data access
     filters.userId = req.auth.userId
   }
+  
+  let foodEntityList
   try {
     foodEntityList = await calorieLimitService.getWarningDaysList(filters)
   } catch (e) {

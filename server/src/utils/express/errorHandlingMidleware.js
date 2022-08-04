@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const errorHandlingMidleware = (err, req, res, next) => {
   if (err.isApiError) {
     res.status(err.code)

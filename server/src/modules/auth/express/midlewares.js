@@ -10,6 +10,7 @@ const { ApiError } = require("../../../utils/apiError");
  */
 const isRevokedCallback = ({
   authService
+// eslint-disable-next-line
 }) => async (req, token) => {
   const tokenToVerify = req.headers.authorization.replace(/Bearer/gi, '')
   const isTokenReboked = await authService.getIsTokenReboked(tokenToVerify);

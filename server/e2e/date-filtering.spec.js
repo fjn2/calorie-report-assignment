@@ -2,7 +2,7 @@ const request = require('supertest');
 const { getAccessToken, getUserId } = require("./utils/auth")
 
 describe('Filtering by dates', () => {
-  let accountToken
+  let accessToken
   let userId
   beforeAll(async () => {
     accessToken = await getAccessToken('user+filtering-dates@user.com')

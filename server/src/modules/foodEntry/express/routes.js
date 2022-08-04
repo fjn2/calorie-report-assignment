@@ -44,7 +44,7 @@ const createFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let newFoodEntry
   try {
-    [oldFoodEntry] = await foodEntryService.getList({
+    const [oldFoodEntry] = await foodEntryService.getList({
       id: req.params.id 
     })
     
@@ -118,7 +118,7 @@ const getOneFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const deleteFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let deletedFoodEntry
   try {
-    [foodEntry] = await foodEntryService.getList({
+    const [foodEntry] = await foodEntryService.getList({
       id: req.params.id 
     })
     
@@ -156,13 +156,15 @@ const getFoodEntryListRoute = ({ foodEntryService }) => async (req, res) => {
     filters.userId = req.auth.userId
   }
   try {
-    foodEntityList = await foodEntryService.getList(filters)
+    const foodEntityList = await foodEntryService.getList(filters)
+    
+    res.status(200)
+    res.send(foodEntityList)
   } catch (e) {
     throw e
   }
   
-  res.status(200)
-  res.send(foodEntityList)
+ 
 }
 
 module.exports = {

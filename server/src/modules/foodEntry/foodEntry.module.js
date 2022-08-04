@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const { body, param, query, check } = require('express-validator');
+const { body, param } = require('express-validator');
 const { requestValidatorMidleware } = require('../../utils/express/requestValidator');
 const PrismaService = require('../prisma/prisma.service');
 const FoodEntryService = require('./foodEntry.service');

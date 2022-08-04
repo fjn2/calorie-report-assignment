@@ -8,13 +8,12 @@ const getFoodEntryWeekComparisonRoute = ({ adminReportingService }) => async (re
   const filters = req.query
 
   try {
-    foodEntryWeekComparisonResult = await adminReportingService.getFoodEntryWeekComparison(filters)
+    const foodEntryWeekComparisonResult = await adminReportingService.getFoodEntryWeekComparison(filters)
+    res.status(200)
+    res.send(foodEntryWeekComparisonResult)
   } catch (e) {
     throw e
   }
-  
-  res.status(200)
-  res.send(foodEntryWeekComparisonResult)
 }
 
 /**
@@ -27,13 +26,13 @@ const getAverageNumberOfCaloriesPerUserInLast7DaysRoute = ({ adminReportingServi
   const filters = req.query
 
   try {
-    foodEntryWeekComparisonResult = await adminReportingService.getAvgCaloriesLast7DaysPerUser(filters)
+    const foodEntryWeekComparisonResult = await adminReportingService.getAvgCaloriesLast7DaysPerUser(filters)
+    
+    res.status(200)
+    res.send(foodEntryWeekComparisonResult)
   } catch (e) {
     throw e
   }
-  
-  res.status(200)
-  res.send(foodEntryWeekComparisonResult)
 }
 
 module.exports = {

@@ -35,7 +35,7 @@ const AuthService = function ({
    * @param {string} tokenToVerify 
    * @returns {Promise<boolean>}
    */
-  this.getIsTokenReboked = async (tokenToVerify) => {
+  this.getIsTokenReboked = async () => {
     // TODO -> Implement
     return false
   }
@@ -93,7 +93,7 @@ const AuthService = function ({
     return user
   }
 
-  this.listUsers = async (userCredentials) => {
+  this.listUsers = async () => {
     let users
 
     users = await prisma.user.findMany({})

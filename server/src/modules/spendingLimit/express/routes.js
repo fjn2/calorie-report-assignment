@@ -1,6 +1,3 @@
-const { Prisma } = require('@prisma/client')
-const { ApiError } = require('../../../utils/apiError.js')
-
 /**
  * 
  * @param {{
@@ -14,14 +11,14 @@ const getSpendingLimitWarningListRoute = ({ spendingLimitService }) => async (re
     // add user id in the request to restrict data access
     filters.userId = req.auth.userId
   }
+
   try {
-    foodEntityList = await spendingLimitService.getWarningMonthLimitList(filters)
+    const foodEntityList = await spendingLimitService.getWarningMonthLimitList(filters)
+    res.status(200)
+    res.send(foodEntityList)
   } catch (e) {
     throw e
-  }
-  
-  res.status(200)
-  res.send(foodEntityList)
+  }  
 }
 
 module.exports = {
