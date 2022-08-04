@@ -24,7 +24,7 @@ const Login = ({ onLogin }) => {
       <Content>
         <Row  type="flex" justify="space-around" align="middle" style={{ height:"100%" }}>
           <Col>
-            <h3>Login into the Toptal Food Reporting assigment.</h3>
+            <h3>Login into the Toptal Food Reporting assignment.</h3>
             <Card>
               <Form
                 name="login"

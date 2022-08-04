@@ -28,17 +28,17 @@ Trace:
 
 npm manifest: 
   {
-    "name": "toptal-assigment",
+    "name": "toptal-assignment",
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "start": "pm2 start ./src/index.js --name toptal-assigment -i 3",
-      "restart": "pm2 restart toptal-assigment",
-      "stop": "pm2 stop toptal-assigment",
-      "delete": "pm2 delete toptal-assigment",
-      "image:build": "docker build . -t toptal-assigment",
-      "image:start": "docker run -p 3333:80 -d toptal-assigment",
+      "start": "pm2 start ./src/index.js --name toptal-assignment -i 3",
+      "restart": "pm2 restart toptal-assignment",
+      "stop": "pm2 stop toptal-assignment",
+      "delete": "pm2 delete toptal-assignment",
+      "image:build": "docker build . -t toptal-assignment",
+      "image:start": "docker run -p 3333:80 -d toptal-assignment",
       "dev": "nodemon ./src/index.js",
       "test:e2e": "jest --watchAll",
       "lint": "eslint . --ext .js"
