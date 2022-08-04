@@ -49,12 +49,14 @@ const FoodCardDescription = ({
 }
 
 const FoodDetailComponent = ({
-  items = [],
-  filters,
-  onFilterChange,
-  onItemRemove,
   basePath,
-  user
+  filters,
+  items = [],
+  onFilterChange,
+  onGetNextPage,
+  onItemRemove,
+  user,
+  hasMore
 }) => {
   const onDateChange = (data) => {
     if (!data) {
@@ -114,13 +116,13 @@ const FoodDetailComponent = ({
               key={item.id}
             >
               <div style={{
-                    position: 'absolute',
-                    top: '0',
-                    right: '0',
-                    transform: 'translate3d(50%, -16px, 0)',
-                    fontSize: '32px',
                     display: 'flex',
                     flexDirection: 'column',
+                    fontSize: '32px',
+                    position: 'absolute',
+                    right: '0',
+                    top: '0',
+                    transform: 'translate3d(50%, -16px, 0)',
                     zIndex: 100,
                   }} >
                   {item.hasCalorieWarning  && (
@@ -154,6 +156,9 @@ const FoodDetailComponent = ({
               />
             </Card>
           ))}
+          {items.length > 0 && hasMore && (
+            <Button onClick={onGetNextPage}>Get more items</Button>
+          )}
           {items.length === 0 && (
             <Empty />
           )}

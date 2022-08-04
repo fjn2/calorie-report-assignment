@@ -89,6 +89,6 @@ describe('Filtering by dates', () => {
       .set('authorization', `Bearer ${accessToken}`)
 
     expect(response.status).toBe(200)
-    expect(response.body.length).toBe(4)
+    expect(response.body.data.length).toBe(4)
   })
 })

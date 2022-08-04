@@ -83,5 +83,11 @@
     "email": "user+searching-users@user.com",
     "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
     "role": "USER"
+  }, {
+    "id": 15,
+    "name": "Admin user pagination",
+    "email": "admin+pagination@admin.com",
+    "password": "$2a$10$RNnWUo/ueBAx3zXJ7kRekeActJ2zWlHpUoaBKi6SBbK3w/9lLXYka",
+    "role": "ADMIN"
   }]
 }

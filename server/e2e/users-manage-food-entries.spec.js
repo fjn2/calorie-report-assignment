@@ -40,9 +40,9 @@ describe('User should be able to manage food entries', () => {
       .set('authorization', `Bearer ${accessToken}`)
 
     expect(response.status).toBe(200)
-    expect(response.body.length).toBeGreaterThan(0)
+    expect(response.body.data.length).toBeGreaterThan(0)
 
-    const storedItem = response.body.find((item) => item.name === createFoodEntryPayload.name)
+    const storedItem = response.body.data.find((item) => item.name === createFoodEntryPayload.name)
 
     expect(storedItem.name).toBeDefined()
     expect(storedItem.price).toBeDefined()
@@ -92,7 +92,7 @@ describe('User should be able to manage food entries', () => {
 
     expect(responseList.status).toBe(200)
     // Verify that the results belows to the current user
-    expect(responseList.body.length).toBe(2)
+    expect(responseList.body.data.length).toBe(2)
   })
   
   it('The admin is the only one that can remove a food entry', async () => {

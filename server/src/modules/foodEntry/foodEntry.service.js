@@ -19,37 +19,56 @@
      userId,
      dateTo,
      dateFrom,
+     skip = 0,
+     take = 10,
    } = {}) => {
-     const filterByDateRange = {}
-     if (dateTo) {
+    const filterByDateRange = {}
+    if (dateTo) {
       filterByDateRange.lt = new Date(dateTo)
-     }
-     if (dateFrom) {
+    }
+    if (dateFrom) {
       filterByDateRange.gt = new Date(dateFrom)
-     }
+    }
+
+    const totalItems = await prisma.foodEntry.count({
+      where: {
+        id,
+        userId,
+        whenFoodWasTaken: filterByDateRange
+      }
+     })
 
      const items = await prisma.foodEntry.findMany({
-       where: {
+      where: {
          id,
          userId,
          whenFoodWasTaken: filterByDateRange
-       },
-       include: {
+      },
+      include: {
         user: {
           select: {
             id: true,
             name: true,
           }
         }
-      }
+      },
+      orderBy: {
+        whenFoodWasTaken: 'desc'
+      },
+      skip,
+      take
      })
-
+     
      const formattedItems = items.map(item => ({
        ...item,
        price: Number(item.price)
      }))
 
-     return formattedItems
+     return {
+        data: formattedItems,
+        count: totalItems,
+        skip,
+      }
    }
  
    /**

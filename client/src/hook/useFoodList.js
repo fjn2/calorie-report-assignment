@@ -5,11 +5,16 @@ import useApplication from './useApplication'
 import useCalorieLimit from './useCalorieLimit'
 import useSpendingLimit from './useSpendingLimit'
 
+const PAGE_SIZE = 10
+
 const useFoodList = () => {
   const [loading, setLoading] = useState()
   const [items, setItems] = useState()
+  const [meta, setMeta] = useState({})
 
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState({
+    take: PAGE_SIZE
+  })
 
   const { user } = useApplication()
   const { items: calorieLimitItems } = useCalorieLimit()
@@ -39,11 +44,30 @@ const useFoodList = () => {
     })
   }
 
+  const getNextPage = () => {
+    if (items.length < meta.count) {
+      setLoading(true)
+      getFoodListSvc({
+        ...filters,
+        skip: items.length
+      })
+      .then(resp => {
+        setItems([...items, ...resp.data])
+        setLoading(false)
+      }).catch(e => {
+        notification.error({
+          description: e.message
+        })
+      })
+    }
+  }
+
   useEffect(() => {
     setLoading(true)
     getFoodListSvc(filters)
     .then(resp => {
-      setItems(resp)
+      setItems(resp.data)
+      setMeta(resp.meta)
       setLoading(false)
     }).catch(e => {
       notification.error({
@@ -65,13 +89,18 @@ const useFoodList = () => {
     }
   })
 
+  const hasMore = (items || []).length < meta.count
+  console.log(hasMore, meta, items)
   return {
-    loading,
-    items: enhancementItems,
-    filters,
-    setFilters,
+    createFood,
     deleteFood,
-    createFood
+    filters,
+    getNextPage,
+    hasMore,
+    items: enhancementItems,
+    loading,
+    meta,
+    setFilters,
   }
 }
 

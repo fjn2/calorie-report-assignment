@@ -6,7 +6,15 @@ import FoodListComponent from './FoodList.component'
 
 const FoodList = () => {
   const { user } = useApplication()
-  const { items, filters, setFilters, deleteFood, createFood } = useFoodList()
+  const {
+    createFood,
+    deleteFood,
+    filters,
+    getNextPage,
+    hasMore,
+    items,
+    setFilters,
+  } = useFoodList()
   
   const onItemAdd = (data) => {
     createFood(data)
@@ -26,12 +34,14 @@ const FoodList = () => {
     <>
       <MenuActionBar />
       <FoodListComponent
-        items={items}
-        filters={filters}
-        onFilterChange={onFilterChange}
-        onItemRemove={onItemRemove}
-        onItemAdd={onItemAdd}
         basePath={basePath}
+        filters={filters}
+        hasMore={hasMore}
+        items={items}
+        onFilterChange={onFilterChange}
+        onGetNextPage={getNextPage}
+        onItemAdd={onItemAdd}
+        onItemRemove={onItemRemove}
         user={user}
       />
     </>

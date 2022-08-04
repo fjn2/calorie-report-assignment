@@ -44,7 +44,7 @@ const createFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let newFoodEntry
   try {
-    const [oldFoodEntry] = await foodEntryService.getList({
+    const {data: [oldFoodEntry]} = await foodEntryService.getList({
       id: req.params.id 
     })
     
@@ -82,9 +82,10 @@ const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const getOneFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let foodEntry
   try {
-    [foodEntry] = await foodEntryService.getList({
+    const resp = await foodEntryService.getList({
       id: req.params.id 
     })
+    foodEntry = resp.data[0]
     // TODO move this logic inside of the service
     if (req.auth.role === 'USER' && foodEntry && foodEntry.userId !== req.auth.userId) {
       next(new ApiError('You have to be admin to perform this operation', 401))
@@ -118,7 +119,7 @@ const getOneFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const deleteFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let deletedFoodEntry
   try {
-    const [foodEntry] = await foodEntryService.getList({
+    const { data: [foodEntry]} = await foodEntryService.getList({
       id: req.params.id 
     })
     
@@ -156,10 +157,16 @@ const getFoodEntryListRoute = ({ foodEntryService }) => async (req, res) => {
     filters.userId = req.auth.userId
   }
   try {
-    const foodEntityList = await foodEntryService.getList(filters)
+    const { data: foodEntityList, count, skip} = await foodEntryService.getList(filters)
     
     res.status(200)
-    res.send(foodEntityList)
+    res.send({
+      data: foodEntityList,
+      meta: {
+        count,
+        skip
+      }
+    })
   } catch (e) {
     throw e
   }

@@ -27,9 +27,9 @@ describe('User montly limit', () => {
       .set('authorization', `Bearer ${accessToken}`)
 
     expect(response2.status).toBe(200)
-    expect(response2.body.length).toBeGreaterThan(0)
+    expect(response2.body.data.length).toBeGreaterThan(0)
     
-    const foodEntryItem = response2.body.find((foodEntry) => foodEntry.id === newFoodEntryId)
+    const foodEntryItem = response2.body.data.find((foodEntry) => foodEntry.id === newFoodEntryId)
     
     expect(foodEntryItem.price).toBe(price)
   })

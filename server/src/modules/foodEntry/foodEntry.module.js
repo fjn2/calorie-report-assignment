@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const { body, param } = require('express-validator');
+const { body, param, query } = require('express-validator');
 const { requestValidatorMidleware } = require('../../utils/express/requestValidator');
 const PrismaService = require('../prisma/prisma.service');
 const FoodEntryService = require('./foodEntry.service');
@@ -43,8 +43,8 @@ const FoodEntryModule = (app) => {
   ])
   
   app.get(`${basePath}`, [
-    // param('dateFrom').default(null).toDate(),
-    // param('dateTo').default(null).toDate(),
+    query('take').default(10).toInt(),
+    query('skip').default(0).toInt(),
     requestValidatorMidleware,
     getFoodEntryListRoute({ foodEntryService })
   ])
