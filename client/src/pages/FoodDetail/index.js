@@ -28,6 +28,8 @@ const FoodDetail = () => {
     })
   }
 
+  const foodListPath = PAGES_ROLE[user.role][PAGES.FOOD_LIST]
+  
   return (
     <>
       <MenuActionBar />
@@ -35,6 +37,7 @@ const FoodDetail = () => {
         foodDetail={foodDetail}
         user={user}
         onSave={onSave}
+        foodListPath={foodListPath}
       />
     </>
   )

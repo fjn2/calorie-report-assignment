@@ -1,8 +1,10 @@
-import { DatePicker, Layout, Table, Tabs } from "antd"
+import moment from 'moment'
+import { Alert, DatePicker, Form, Layout, Table, Tabs, Typography } from "antd"
 import MenuActionBar from "../../components/MenuActionBar"
 import useReporting from "../../hook/useReporting"
 
 const { Content } = Layout
+const { Title } = Typography
 
 const foodWeekComparisonColumns = [
   {
@@ -48,33 +50,47 @@ const Reporting = () => {
   const onFilterChange = (date) => {
     setFilters({ date: date.toISOString() })
   }
-console.log(foodEntryWeekComparisonReport)
+
   return (
     <>
       <MenuActionBar />
       <Layout style={{ height: '100vh' }}>
         <Content>
-          2022-08-15
-          Base date: 
-          <DatePicker onChange={onFilterChange} />
-          <Tabs>
-            <Tabs.TabPane tab="Food Week Comparison" key="1">
-              Number of added entries in the last 7 days vs. added entries the week before that.
+          <div style={{margin: '16px'}}>
+            <Title level={3}>Reporting</Title>
+            <Form.Item label="Base date">
+              <DatePicker onChange={onFilterChange} defaultValue={moment()} />
+            </Form.Item>
+            <Tabs>
+              <Tabs.TabPane tab="Food Week Comparison" key="1">
+                  <Alert
+                    message="Number of added entries in the last 7 days vs. added entries the week before that."
+                    type="info"
+                    showIcon
+                    closable
+                  />
+                
+                  <Table  
+                    columns={foodWeekComparisonColumns}
+                    dataSource={foodEntryWeekComparisonReport}
+                    pagination={false}
+                  />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Calories Per User" key="2">
+                <Alert
+                  message="The average number of calories added per user for the last 7 days."
+                  type="info"
+                  showIcon
+                  closable
+                />
                 <Table  
-                  columns={foodWeekComparisonColumns}
-                  dataSource={foodEntryWeekComparisonReport}
+                  columns={avgNumberOfCaloriesPerUserColumns}
+                  dataSource={avgNumberOfCaloriesPerUserReport}
                   pagination={false}
                 />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Calories Per User" key="2">
-              The average number of calories added per user for the last 7 days
-              <Table  
-                columns={avgNumberOfCaloriesPerUserColumns}
-                dataSource={avgNumberOfCaloriesPerUserReport}
-                pagination={false}
-              />
-            </Tabs.TabPane>
-          </Tabs>
+              </Tabs.TabPane>
+            </Tabs>
+          </div>
         </Content>
       </Layout>
     </>

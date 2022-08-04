@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Layout, Row } from 'antd';
+import { Button, Card, Col, Form, Input, Layout, Row } from 'antd';
 import React from 'react';
 
 const { Content } = Layout
@@ -24,56 +24,59 @@ const Login = ({ onLogin }) => {
       <Content>
         <Row  type="flex" justify="space-around" align="middle" style={{ height:"100%" }}>
           <Col>
-            <Form
-              name="login"
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              initialValues={{
-                email: 'federico@federico.com',
-                password: '12345'
-              }}
-              autoComplete="off"
-            >
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your email!',
-                  },
-                ]}
-                {...formItemLayout}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                ]}
-                {...formItemLayout}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
+            <h3>Login into the Toptal Food Reporting assigment.</h3>
+            <Card>
+              <Form
+                name="login"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                initialValues={{
+                  email: 'federico@federico.com',
+                  password: '12345'
                 }}
+                autoComplete="off"
               >
-                <Button type="primary" htmlType="submit">
-                  Login
-                </Button>
-              </Form.Item>
-            </Form>
-            </Col>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your email!',
+                    },
+                  ]}
+                  {...formItemLayout}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your password!',
+                    },
+                  ]}
+                  {...formItemLayout}
+                >
+                  <Input.Password />
+                </Form.Item>
+
+                <Form.Item
+                  wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                  }}
+                >
+                  <Button type="primary" htmlType="submit">
+                    Login
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Col>
         </Row>
       </Content>
     </Layout>

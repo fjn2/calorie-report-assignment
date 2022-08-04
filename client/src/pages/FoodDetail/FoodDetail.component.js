@@ -1,9 +1,11 @@
-import { Layout, DatePicker, Form, Button, Input, InputNumber } from 'antd';
+import { Layout, DatePicker, Form, Button, Input, InputNumber, Typography, Card } from 'antd';
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { USER_TYPE } from '../../utils';
 import SelectUser from './components/SelectUser';
 
 const { Content } = Layout
+const { Title } = Typography
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -14,7 +16,8 @@ const formItemLayout = {
 const FoodDetailComponent = ({
   foodDetail = {},
   user,
-  onSave
+  onSave,
+  foodListPath
 }) => {
   const { name, price, whenFoodWasTaken, calories, userId } = foodDetail
   const [form] = Form.useForm()
@@ -37,80 +40,89 @@ const FoodDetailComponent = ({
   return (
     <Layout style={{height:"100vh"}}>
       <Content>
-        <Form
-          form={form}
-          name="food-detail-form"
-          onFinish={onFinish}
-          style={{maxWidth: '500px', margin: '16px auto'}}
-          labelAlign="left"
-        >
-          <h3>Food Entry Detail</h3>
-          <Form.Item
-            name="foodName"
-            label="Name"
-            tooltip="What have you eaten? (ie Hamburder with fries)"
-            rules={[{ required: true, message: 'Please input the name of the food!' }]}
-            {...formItemLayout}
+        <div style={{ margin: '16px' }}>
+          <Title level={3}>Food Entry Detail</Title>
+        </div>
+        <Card style={{margin: '16px'}}>
+          <Form
+            form={form}
+            name="food-detail-form"
+            onFinish={onFinish}
+            style={{maxWidth: '500px', margin: '16px auto'}}
+            labelAlign="left"
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="calories"
-            label="Calories"
-            tooltip="How many calories does it have? (ie 5000)"
-            rules={[
-              {
-                type: 'number',
-                min: 0,
-                max: 99999,
-              },
-              { required: true, message: 'Please input the amount of calories!' }
-            ]}
-            {...formItemLayout}
-          >
-            <InputNumber />
-          </Form.Item>
-          <Form.Item
-            name="price"
-            label="Price"
-            tooltip="How much did it cost?"
-            rules={[
-              {
-                type: 'number',
-                min: 0,
-                max: 99999,
-              },
-              { required: true, message: 'Please input the price!' }
-            ]}
-            {...formItemLayout}
-          >
-            <InputNumber />
-          </Form.Item>
-          <Form.Item
-            name="whenFoodWasTaken"
-            label="Date"
-            tooltip="When was the food taken?"
-            rules={[{ required: true, message: 'Please input when did you take it!' }]}
-            {...formItemLayout}
-          >
-            <DatePicker showTime />
-          </Form.Item>
-          { user.role === USER_TYPE.ADMIN && (
             <Form.Item
-              name="userId"
-              label="User"
-              rules={[{ required: true, message: 'Please enter who has taken it!' }]}
+              name="foodName"
+              label="Name"
+              tooltip="What have you eaten? (ie Hamburder with fries)"
+              rules={[{ required: true, message: 'Please input the name of the food!' }]}
               {...formItemLayout}
             >
-              <SelectUser />
+              <Input />
             </Form.Item>
-          )}
-          <Form.Item wrapperCol={{ ...formItemLayout, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Save
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="calories"
+              label="Calories"
+              tooltip="How many calories does it have? (ie 5000)"
+              rules={[
+                {
+                  type: 'number',
+                  min: 0,
+                  max: 99999,
+                },
+                { required: true, message: 'Please input the amount of calories!' }
+              ]}
+              {...formItemLayout}
+            >
+              <InputNumber />
+            </Form.Item>
+            <Form.Item
+              name="price"
+              label="Price"
+              tooltip="How much did it cost?"
+              rules={[
+                {
+                  type: 'number',
+                  min: 0,
+                  max: 99999,
+                },
+                { required: true, message: 'Please input the price!' }
+              ]}
+              {...formItemLayout}
+            >
+              <InputNumber />
+            </Form.Item>
+            <Form.Item
+              name="whenFoodWasTaken"
+              label="Date"
+              tooltip="When was the food taken?"
+              rules={[{ required: true, message: 'Please input when did you take it!' }]}
+              {...formItemLayout}
+            >
+              <DatePicker showTime />
+            </Form.Item>
+            { user.role === USER_TYPE.ADMIN && (
+              <Form.Item
+                name="userId"
+                label="User"
+                rules={[{ required: true, message: 'Please enter who has taken it!' }]}
+                {...formItemLayout}
+              >
+                <SelectUser />
+              </Form.Item>
+            )}
+            <Form.Item wrapperCol={{ ...formItemLayout, offset: 8 }}>
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button>
+              <Link to={foodListPath}>
+                <Button>
+                  Cancel
+                </Button>
+              </Link>
+            </Form.Item>
+          </Form>
+        </Card>
       </Content>
     </Layout>
   );

@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "pm2 start ./src/index.js --name toptal-assigment -i 3",
+    "restart": "pm2 restart toptal-assigment",
+    "stop": "pm2 stop toptal-assigment",
+    "delete": "pm2 delete toptal-assigment",
     "dev": "nodemon ./src/index.js",
     "test:e2e": "jest --watchAll"
   },
@@ -17,9 +21,11 @@
     "express-jwt": "^7.7.5",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
+    "pm2": "^5.2.0",
     "prisma": "^4.1.0"
   },
   "devDependencies": {
+    "eslint": "^8.21.0",
     "jest": "^28.1.3",
     "nodemon": "^2.0.19",
     "supertest": "^6.2.4"

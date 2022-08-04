@@ -1,4 +1,4 @@
-import { Col, Layout, Row, Typography } from "antd"
+import { Card, Layout, List, Typography } from "antd"
 import MenuActionBar from "../../components/MenuActionBar"
 import useApplication from "../../hook/useApplication"
 
@@ -18,23 +18,31 @@ const Profile = () => {
         <Content>
           <div style={{ margin: '16px' }}>
             <Title level={3}>Your Profile</Title>
-            <Row>
-              <Col span={6}>Email:</Col><Col flex={1}><b>{user.email}</b></Col>
-            </Row>
-            <Row>
-              <Col span={6}>Name:</Col><Col flex={1}><b>{user.name}</b></Col>
-            </Row>
-            <Row>
-              <Col span={6}>Role:</Col><Col flex={1}><b>{user.role}</b></Col>
-            </Row>
-            <Row>
-              <Col span={6}>Calories Limit (Day):</Col><Col flex={1}><b>{user.calorieWarningThreshold} cal</b></Col>
-            </Row>
-            <Row>
-              <Col span={6}>Spend Limit (Month):</Col><Col flex={1}><b>$ 1000</b></Col>
-            </Row>
           </div>
-          
+          <Card>
+            <List size="large">
+              <List.Item>
+                <List.Item.Meta title="Email" />
+                <div>{user.email}</div>
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta title="Name" />
+                <div>{user.name}</div>
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta title="Role" />
+                <div>{user.role}</div>
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta title="Calories Limit (Day)" />
+                <div>{user.calorieWarningThreshold} cal</div>
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta title="Spend Limit (Month):" />
+                <div>$ 1000</div>
+              </List.Item>
+            </List>
+          </Card>
         </Content>
       </Layout>
     </>

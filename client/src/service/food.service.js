@@ -63,7 +63,7 @@ export const createFoodDetailSvc = async (data) => {
         throw new Error(e.data)
       }
       if (e.code === 400) {
-        const errorMessage = e.data.map(error => `${error.param} - ${error.msg}`).join('. ')
+        const errorMessage = e.data.map(error => `${error.msg}`).join('. ')
         throw new Error(errorMessage)
       }
     }

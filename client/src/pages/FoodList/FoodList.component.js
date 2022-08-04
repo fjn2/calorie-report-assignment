@@ -1,5 +1,6 @@
+import moment from 'moment'
 import { EditOutlined } from '@ant-design/icons'
-import { Card, Layout, List, DatePicker, Button, Popconfirm, Empty, Tooltip, Form } from 'antd'
+import { Card, Layout, List, DatePicker, Button, Popconfirm, Empty, Tooltip, Form, Typography } from 'antd'
 import {
   DeleteOutlined,
   WarningFilled,
@@ -11,6 +12,15 @@ import { USER_TYPE } from '../../utils'
 const { Meta } = Card
 const { Content } = Layout
 const { RangePicker } = DatePicker
+const { Title } = Typography
+
+const getRangePickerValue = (filters) => {
+  if (filters && filters.dateFrom) {
+    return [moment(filters.dateFrom), moment(filters.dateTo)]
+  } else {
+    return [null, null]
+  }
+}
 
 const FoodCardDescription = ({
   calories,
@@ -65,11 +75,14 @@ const FoodDetailComponent = ({
   return (
     <Layout style={{height:"100vh", overflowY: 'scroll'}}>
       <Content>
-        <div className="filter-section" style={{margin: '16px'}}>
-          <Form.Item label="Date filter">
-            <RangePicker showTime onChange={onDateChange} />
-          </Form.Item>
+        <div style={{ margin: '16px' }}>
+          <Title level={3}>Food List</Title>
         </div>
+        <Card style={{margin: '16px'}}>
+          <Form.Item label="Date filter">
+            <RangePicker showTime onChange={onDateChange} value={getRangePickerValue(filters)} />
+          </Form.Item>
+        </Card>
         <div className="filter-section">
             {
               filters.dateFrom && (

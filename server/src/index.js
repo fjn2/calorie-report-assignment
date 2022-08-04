@@ -1,5 +1,6 @@
 const express = require('express')
 const { errorHandlingMidleware } = require('./utils/express/errorHandlingMidleware')
+const { processIdMidleware } = require('./utils/express/processIdMidleware')
 const cors = require('cors')
 // Load env variables
 require('dotenv').config()
@@ -11,6 +12,8 @@ const port = process.env.APP_PORT
 const app = express()
 
 app.use(cors())
+
+app.use(processIdMidleware)
 
 const AuthModule = require('./modules/auth/auth.module')
 const FoodEntryModule = require('./modules/foodEntry/foodEntry.module')
@@ -24,7 +27,7 @@ CalorieLimitModule(app)
 SpendingLimitModule(app)
 AdminReportingModule(app)
 
-
+app.use(processIdMidleware)
 app.use(errorHandlingMidleware)
 
 app.listen(port, () => {

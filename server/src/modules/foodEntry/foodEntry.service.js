@@ -33,7 +33,15 @@
          id,
          userId,
          whenFoodWasTaken: filterByDateRange
-       }
+       },
+       include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+      }
      })
 
      const formattedItems = items.map(item => ({
