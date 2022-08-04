@@ -26,8 +26,9 @@ const logInRoute = ({ authService }) => async (req, res, next) => {
     const token = jwt.sign({
       userId: user.id,
       email: req.body.email,
-      password: req.body.password,
+      name: user.name,
       role: user.role,
+      calorieWarningThreshold: user.calorieWarningThreshold,
       exp: Math.floor(Date.now() / 1000) + (60 * 60 * EXPIRATION_TIME_IN_HOURS),
     }, process.env.JWT_TOKEN_SECRET);
 

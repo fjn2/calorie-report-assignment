@@ -5,6 +5,8 @@ describe('User should be able to manage food entries', () => {
   let accessToken
   let userId
 
+  let foodEntryId
+
   const createFoodEntryPayload = {
     name: 'Hamburger',
     calories: 12345,
@@ -29,6 +31,7 @@ describe('User should be able to manage food entries', () => {
 
     expect(response.status).toBe(201)
     expect(response.body.id).toBeDefined()
+    foodEntryId = response.body.id
   })
   
   it('Food entry should contain the needed information', async () => {
@@ -92,5 +95,63 @@ describe('User should be able to manage food entries', () => {
     expect(responseList.body.length).toBe(2)
   })
   
-  it.todo('When getting the detail of a food, with an invalid id, the server should return a propper error')
+  it('The admin is the only one that can remove a food entry', async () => {
+    const response = await request(BASE_URL)
+      .delete(`/food-entry/${foodEntryId}`)
+      .set('authorization', `Bearer ${accessToken}`)
+
+    expect(response.status).toBe(401)
+    expect(response.body).toEqual({ errors: [ { msg: 'You have to be ADMIN to perform this action' } ] })
+  })
+  
+  it('When getting the detail of a food, with an invalid id, the server should return a propper error', async () => {
+    const response = await request(BASE_URL)
+      .get('/food-entry/undefined')
+      .set('authorization', `Bearer ${accessToken}`)
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({
+        errors: [
+          {
+            value: 'undefined',
+            msg: 'Invalid value',
+            param: 'id',
+            location: 'params'
+          }
+        ]
+      })
+  })
+
+  it('The date when the food was taken should not be a future date on creation', async () => {
+    const response = await request(BASE_URL)
+      .post('/food-entry')
+      .set('authorization', `Bearer ${accessToken}`)
+      .send({
+        name: 'Food from the future',
+        calories: 12345,
+        price: 101.55,
+        whenFoodWasTaken: new Date('2023-01-01')
+      })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      errors: [ { msg: 'The whenFoodWasTaken date can not be in the future' } ]
+    })
+  })
+  it('The date when the food was taken should not be a future date on update', async () => {
+    const response = await request(BASE_URL)
+      .put(`/food-entry/${foodEntryId}`)
+      .set('authorization', `Bearer ${accessToken}`)
+      .send({
+        name: 'Food from the future',
+        calories: 12345,
+        price: 101.55,
+        whenFoodWasTaken: new Date('2023-01-02')
+      })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      errors: [ { msg: 'The whenFoodWasTaken date can not be in the future' } ]
+    })
+  })
 })

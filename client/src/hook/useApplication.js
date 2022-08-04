@@ -18,11 +18,17 @@ export const ApplicationContext = ({ children }) => {
     })
   }, [navigation])
 
+  const logout = () => {
+    localStorage.removeItem('auth_token')
+    navigation('/login')
+  }
+
   return (
     <StoreContext.Provider
       value={{
         user,
-        setUser
+        setUser,
+        logout
       }}
     >
       {user ? (

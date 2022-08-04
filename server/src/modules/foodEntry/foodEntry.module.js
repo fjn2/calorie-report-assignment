@@ -36,6 +36,7 @@ const FoodEntryModule = (app) => {
   
   app.get(`${basePath}/:id`, [
     param('id').exists(),
+    param('id').isNumeric(),
     param('id').toInt(),
     requestValidatorMidleware,
     getOneFoodEntryRoute({ foodEntryService })
@@ -50,6 +51,7 @@ const FoodEntryModule = (app) => {
 
   app.delete(`${basePath}/:id`, [
     param('id').exists(),
+    param('id').isNumeric(),
     param('id').toInt(),
     requestValidatorMidleware,
     deleteFoodEntryRoute({ foodEntryService })

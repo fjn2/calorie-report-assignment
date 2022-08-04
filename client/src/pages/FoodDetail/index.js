@@ -1,6 +1,9 @@
+import { notification } from "antd"
 import { useNavigate, useParams } from "react-router-dom"
+import MenuActionBar from "../../components/MenuActionBar"
 import useApplication from "../../hook/useApplication"
 import useFoodDetail from "../../hook/useFoodDetail"
+import { PAGES, PAGES_ROLE } from "../../Routes"
 import FoodDetailComponent from './FoodDetail.component'
 
 const FoodDetail = () => {
@@ -18,16 +21,22 @@ const FoodDetail = () => {
       action = updateFood(data)
     }
     action.then(() => {
-      navigation('/')
+      notification.success({
+        description: 'Operation successful'
+      })
+      navigation(PAGES_ROLE[user.role][PAGES.FOOD_LIST])
     })
   }
 
   return (
-    <FoodDetailComponent
-      foodDetail={foodDetail}
-      user={user}
-      onSave={onSave}
-    />
+    <>
+      <MenuActionBar />
+      <FoodDetailComponent
+        foodDetail={foodDetail}
+        user={user}
+        onSave={onSave}
+      />
+    </>
   )
 }
 

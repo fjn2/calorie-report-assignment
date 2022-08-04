@@ -2,7 +2,6 @@ const request = require('supertest');
 const { getUserId, getAccessToken } = require('./utils/auth');
 
 describe('Admin role with a simple reporting', () => {
-  it.todo('Admin rol should have access to reporting screen')
   describe('Admin can manage all food entries', () => {
     let accessToken
     let userId
@@ -156,43 +155,43 @@ describe('Admin role with a simple reporting', () => {
         name: 'Food 1',
         calories: 342,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-04'),
+        whenFoodWasTaken: new Date('1990-08-04'),
         userId: userId1,
       }, {
         name: 'Food 2',
         calories: 125,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-04'),
+        whenFoodWasTaken: new Date('1990-08-04'),
         userId: userId2,
       }, {
         name: 'Food 3',
         calories: 463,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-10'),
+        whenFoodWasTaken: new Date('1990-08-10'),
         userId: userId1,
       }, {
         name: 'Food 4',
         calories: 100,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-11'),
+        whenFoodWasTaken: new Date('1990-08-11'),
         userId: userId2,
       }, {
         name: 'Food 5',
         calories: 452,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-11'),
+        whenFoodWasTaken: new Date('1990-08-11'),
         userId: userId1,
       }, {
         name: 'Food 6',
         calories: 200,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-12'),
+        whenFoodWasTaken: new Date('1990-08-12'),
         userId: userId2,
       }, {
         name: 'Food 7',
         calories: 624,
         price: 123,
-        whenFoodWasTaken: new Date('2022-08-12'),
+        whenFoodWasTaken: new Date('1990-08-12'),
         userId: userId1,
       }]
 
@@ -208,28 +207,27 @@ describe('Admin role with a simple reporting', () => {
 
     it('Admin get the "Added entries list" in the last days, with the comparation of the previous week', async () => {
       const response = await request(BASE_URL)
-          .get('/admin-reporting/food-entry-week-comparison?date=2022-08-15')
+          .get('/admin-reporting/food-entry-week-comparison?date=1990-08-15')
           .set('authorization', `Bearer ${accessTokenAdmin}`)
       // evaluate the results
       expect(response.status).toBe(200)
       expect(response.body).toEqual([
-        { dayOfWeek: 3, thisweekcount: 1, lastweekcount: 0 },
-        { dayOfWeek: 4, thisweekcount: 2, lastweekcount: 2 },
-        { dayOfWeek: 5, thisweekcount: 2, lastweekcount: 0 }
+        { dayOfWeek: 0, thisweekcount: 2, lastweekcount: 0 },
+        { dayOfWeek: 5, thisweekcount: 1, lastweekcount: 0 },
+        { dayOfWeek: 6, thisweekcount: 2, lastweekcount: 2 }
       ])
-      
     })
 
     it('Admin get the average number of calories per user in the last 7 days', async () => {
       const response = await request(BASE_URL)
-          .get('/admin-reporting/avg-number-calories-per-user?date=2022-08-15')
+          .get('/admin-reporting/avg-number-calories-per-user?date=1990-08-15')
           .set('authorization', `Bearer ${accessTokenAdmin}`)
       
       // evaluate the results
       expect(response.status).toBe(200)
       expect(response.body).toEqual([
-        { avgCaloriesLast7Days: 150, userId: 10 },
-        { avgCaloriesLast7Days: 513, userId: 9 }
+        { avgCaloriesLast7Days: 150, userId: 10, userName: 'User Reporting 2'},
+        { avgCaloriesLast7Days: 513, userId: 9, userName: 'User Reporting 1' }
       ])
     })
   })
@@ -242,7 +240,7 @@ describe('Admin role with a simple reporting', () => {
 
     it('User tries to access food-entry last week comparison data', async () => {
       const response = await request(BASE_URL)
-          .get('/admin-reporting/food-entry-week-comparison?date=2022-08-15')
+          .get('/admin-reporting/food-entry-week-comparison?date=1990-08-15')
           .set('authorization', `Bearer ${accessToken}`)
       
       // evaluate the results
@@ -251,7 +249,7 @@ describe('Admin role with a simple reporting', () => {
 
     it('User tries to access last 7 days avg calories data', async () => {
       const response = await request(BASE_URL)
-      .get('/admin-reporting/avg-number-calories-per-user?date=2022-08-15')
+      .get('/admin-reporting/avg-number-calories-per-user?date=1990-08-15')
           .set('authorization', `Bearer ${accessToken}`)
       
       // evaluate the results

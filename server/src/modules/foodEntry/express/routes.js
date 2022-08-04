@@ -25,7 +25,7 @@ const createFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
       }
     }
     if (e.isProblemSpaceError) {
-      next(new ApiError(e.message, 401))
+      next(new ApiError(e.message, e.code || 401))
       return
     }
     throw e
@@ -44,14 +44,9 @@ const createFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
 const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) => {
   let newFoodEntry
   try {
-    [foodEntry] = await foodEntryService.getList({
+    [oldFoodEntry] = await foodEntryService.getList({
       id: req.params.id 
     })
-    // TODO move this logic inside of the service
-    if (req.auth.role === 'USER' && foodEntry && foodEntry.userId !== req.auth.userId) {
-      next(new ApiError('You have to be admin to perform this operation', 401))
-      return
-    }
     
     newFoodEntry = await foodEntryService.update({
       id: req.params.id,
@@ -60,14 +55,17 @@ const updateFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
       price: req.body.price,
       whenFoodWasTaken: req.body.whenFoodWasTaken,
       userId: +req.body.userId,
-    }, req.auth)
+    }, oldFoodEntry, req.auth)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
         // constrain error, not addressed yet
       }
     }
-
+    if (e.isProblemSpaceError) {
+      next(new ApiError(e.message, e.code || 401))
+      return
+    }
     throw e
   }
   
@@ -123,15 +121,8 @@ const deleteFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
     [foodEntry] = await foodEntryService.getList({
       id: req.params.id 
     })
-    // TODO move this logic inside of the service
-    if (req.auth.role === 'USER' && foodEntry && foodEntry.userId !== req.auth.userId) {
-      next(new ApiError('You have to be admin to perform this operation', 401))
-      return
-    }
     
-    deletedFoodEntry = await foodEntryService.delete({
-      id: req.params.id 
-    })
+    deletedFoodEntry = await foodEntryService.delete(foodEntry, req.auth)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
@@ -139,6 +130,11 @@ const deleteFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
       }
     }
 
+    if (e.isProblemSpaceError) {
+      next(new ApiError(e.message, e.code || 401))
+      return
+    }
+    
     throw e
   }
   

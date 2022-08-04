@@ -30,6 +30,11 @@ const useFoodDetail = (id) => {
     return updateFoodDetailSvc({
       id: foodDetail.id,
       ...data
+    }).catch((e) => {
+      notification.error({
+        description: e.message
+      })
+      return Promise.reject()
     })
   }
 
@@ -38,6 +43,7 @@ const useFoodDetail = (id) => {
       notification.error({
         description: e.message
       })
+      return Promise.reject()
     })
   }
 

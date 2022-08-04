@@ -23,9 +23,9 @@ export const ApiErrorHandler = async response => {
       errorObj.message = 'Unauthorized'
       errorObj.code = 401
       errorObj.data = body.errors || body.error
-      if (window.location.pathname !== '/login') {
-        window.location = '/login'
-      }
+      // if (window.location.pathname !== '/login') {
+      //   window.location = '/login'
+      // }
     } else if (response.status === 404) {
       // default message for the 404
       errorObj.message = 'The URL was not found'

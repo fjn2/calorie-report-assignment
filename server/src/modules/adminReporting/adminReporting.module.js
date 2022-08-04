@@ -17,13 +17,13 @@ const AdminReportingModule = (app) => {
   app.use(`${basePath}`, secureUrlByRolMidleware('ADMIN'))
 
   app.get(`${basePath}/food-entry-week-comparison`, [
-    query('date').default((new Date().toISOString()).substring(0,10)).isDate(),
+    query('date').default((new Date().toISOString()).substring(0,10)),
     requestValidatorMidleware,
     getFoodEntryWeekComparisonRoute({ adminReportingService })
   ])
 
   app.get(`${basePath}/avg-number-calories-per-user`, [
-    query('date').default((new Date().toISOString()).substring(0,10)).isDate(),
+    query('date').default((new Date().toISOString()).substring(0,10)),
     requestValidatorMidleware,
     getAverageNumberOfCaloriesPerUserInLast7DaysRoute({ adminReportingService })
   ])

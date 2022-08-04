@@ -79,6 +79,10 @@ export const deleteFoodDetailSvc = async (foodId) => {
   } catch (e) {
     if(e instanceof ApiError) {
       if (e.code === 401) {
+        if (e.data instanceof Array) {
+          const errorMessage = e.data.map(error => `${error.msg}`).join('. ')
+          throw new Error(errorMessage)
+        }
         throw new Error(e.data)
       }
     }

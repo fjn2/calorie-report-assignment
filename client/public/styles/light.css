@@ -26138,16 +26138,32 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 /* IMPORT PARTIALS HERE */
 body {
-  background: red;
+  background: lightcyan;
 }
 .card-list {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 105px;
 }
 .filter-section {
   display: flex;
   justify-content: center;
+}
+.menu-action-bar {
+  text-align: center;
+  position: fixed;
+  background: #000c17;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  bottom: 0;
+  display: flex;
+  padding: 16px;
+}
+.menu-action-bar > button,
+.menu-action-bar > a {
+  flex: 1;
 }
 /* OVERWRITE ANTD VARIABLES HERE */

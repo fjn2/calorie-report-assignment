@@ -56,7 +56,8 @@
    }) => {
     const result = await prisma.$queryRawUnsafe(`SELECT
       avg("calories"),
-      "User"."id"
+      "User"."id",
+      "User"."name"
       FROM
       "User"
       LEFT JOIN
@@ -65,13 +66,15 @@
       "whenFoodWasTaken" < '${date}' 
       AND "whenFoodWasTaken" > (TO_DATE('${date}', 'YYYY-MM-DD') - INTERVAL '7 DAY')
       GROUP BY
-      "User"."id"
+      "User"."id",
+      "User"."name"
       ORDER BY avg("calories")
     `)
     
     const formattedResult = result.map((item) => ({
       avgCaloriesLast7Days: item.avg ? Number(item.avg) : 0,
       userId: item.id,
+      userName: item.name,
     }))
 
     return formattedResult

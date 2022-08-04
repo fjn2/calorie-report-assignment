@@ -3,6 +3,12 @@ import React from 'react';
 
 const { Content } = Layout
 
+
+const formItemLayout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
 const Login = ({ onLogin }) => {
   
   const onFinish = (values) => {
@@ -17,7 +23,7 @@ const Login = ({ onLogin }) => {
     <Layout style={{height:"100vh"}}>
       <Content>
         <Row  type="flex" justify="space-around" align="middle" style={{ height:"100%" }}>
-          <Col xs={{ span: 16 }} md={{ span: 6 }}>
+          <Col>
             <Form
               name="login"
               onFinish={onFinish}
@@ -37,6 +43,7 @@ const Login = ({ onLogin }) => {
                     message: 'Please input your email!',
                   },
                 ]}
+                {...formItemLayout}
               >
                 <Input />
               </Form.Item>
@@ -50,6 +57,7 @@ const Login = ({ onLogin }) => {
                     message: 'Please input your password!',
                   },
                 ]}
+                {...formItemLayout}
               >
                 <Input.Password />
               </Form.Item>
@@ -61,7 +69,7 @@ const Login = ({ onLogin }) => {
                 }}
               >
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Login
                 </Button>
               </Form.Item>
             </Form>

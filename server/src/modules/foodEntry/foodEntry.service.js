@@ -58,6 +58,12 @@
       }
       foodEntry.userId = currentUser.userId
     }
+    if (new Date(foodEntry.whenFoodWasTaken) > new Date()) {
+      const error = new Error('The whenFoodWasTaken date can not be in the future')
+      error.isProblemSpaceError = true
+      error.code = 400
+      throw error
+    }
     const foodEntryItem = await prisma.foodEntry.create({
       data: foodEntry
     })
@@ -69,9 +75,21 @@
     * @param {import('@prisma/client').FoodEntry} foodEntry Object to store
     * @returns 
     */
-   this.update = async ({ id, ...foodEntry}, currentUser) => {
+   this.update = async ({ id, ...foodEntry}, oldFoodEntry, currentUser) => {
+    if (currentUser.role === 'USER' && oldFoodEntry && oldFoodEntry.userId !== currentUser.userId) {
+      const error = new Error('You have to be ADMIN to perform this operation')
+      error.isProblemSpaceError = true
+      error.code = 401
+      throw error
+    }
     if (currentUser.role === 'USER') {
       foodEntry.userId = currentUser.userId
+    }
+    if (new Date(foodEntry.whenFoodWasTaken) > new Date()) {
+      const error = new Error('The whenFoodWasTaken date can not be in the future')
+      error.isProblemSpaceError = true
+      error.code = 400
+      throw error
     }
     const foodEntryItem = await prisma.foodEntry.update({
       where: { id },
@@ -85,7 +103,19 @@
     * @param {import('@prisma/client').FoodEntry} foodEntry Object to store
     * @returns the deleted item
     */
-   this.delete = async (foodEntry) => {
+   this.delete = async (foodEntry, currentUser) => {
+    if (currentUser.role === 'USER' && foodEntry && foodEntry.userId !== currentUser.userId) {
+      const error = new Error('You have to be ADMIN to perform this action')
+      error.isProblemSpaceError = true
+      error.code = 401
+      throw error
+    }
+    if (currentUser.role === 'USER') {
+      const error = new Error('You have to be ADMIN to perform this action')
+      error.isProblemSpaceError = true
+      error.code = 401
+      throw error
+    }
     const deletedFoodEntryItem = await prisma.foodEntry.delete({
       where: { id: foodEntry.id }
     })

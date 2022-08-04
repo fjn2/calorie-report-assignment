@@ -1,14 +1,15 @@
 import { EditOutlined } from '@ant-design/icons'
-import { Avatar, Card, Layout, List, DatePicker, Typography, Button, Popconfirm, Empty } from 'antd'
+import { Card, Layout, List, DatePicker, Button, Popconfirm, Empty, Tooltip, Form } from 'antd'
 import {
-  DeleteOutlined
+  DeleteOutlined,
+  WarningFilled,
+  TagsFilled,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 const { Meta } = Card
 const { Content } = Layout
 const { RangePicker } = DatePicker
-const { Text } = Typography
 
 const FoodCardDescription = ({
   calories,
@@ -35,10 +36,13 @@ const FoodDetailComponent = ({
   filters,
   onFilterChange,
   onItemRemove,
-  onItemEdit,
-  onItemAdd,
+  basePath
 }) => {
   const onDateChange = (data) => {
+    if (!data) {
+      onCleanFilters()
+      return
+    }
     const [dateFrom, dateTo] = data
     onFilterChange({
       dateFrom: dateFrom.toISOString(),
@@ -51,21 +55,19 @@ const FoodDetailComponent = ({
   }
 
   return (
-    <Layout style={{height:"100vh"}}>
+    <Layout style={{height:"100vh", overflowY: 'scroll'}}>
       <Content>
-        <div className="filter-section">
-          <RangePicker showTime onChange={onDateChange} />
+        <div className="filter-section" style={{margin: '16px'}}>
+          <Form.Item label="Date filter">
+            <RangePicker showTime onChange={onDateChange} />
+          </Form.Item>
         </div>
-        <Link to="/new">
-          <Button>Add Food</Button>
-        </Link>
         <div className="filter-section">
             {
               filters.dateFrom && (
-                <>
-                  <Text>You are filtering from {filters.dateFrom.toLocaleString()} to {filters.dateTo}</Text>
+                <Form.Item label="You are filtering by Date" colon={false}>
                   <Button type="link" onClick={onCleanFilters}>Clean Filters</Button>
-                </>
+                </Form.Item>
               )
             }
           </div>
@@ -84,14 +86,42 @@ const FoodDetailComponent = ({
                 >
                   <DeleteOutlined key="delete" />,
                 </Popconfirm>,
-                <Link to={`/${item.id}`}>
+                <Link to={`${basePath}/${item.id}`}>
                   <EditOutlined key="edit" />,
                 </Link>
               ]}
               key={item.id}
             >
+              <div style={{
+                    position: 'absolute',
+                    top: '0',
+                    right: '0',
+                    transform: 'translate3d(50%, -16px, 0)',
+                    fontSize: '32px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    zIndex: 100,
+                  }} >
+                  {item.hasCalorieWarning  && (
+                    <Tooltip
+                      title={`You are exeded by ${item.totalCaloriesExceded} calories.`}
+                    >
+                      <WarningFilled style={{
+                        color: '#b8b84b',
+                      }}  />
+                    </Tooltip>
+                  )}
+                  {item.hasReachSpendingLimit  && (
+                    <Tooltip
+                      title={`You have expended ${item.totalSpendedInPeriod} in this month.`}
+                    >
+                      <TagsFilled style={{
+                        color: '#32bd39',
+                      }}  />
+                    </Tooltip>
+                  )}
+              </div>
               <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                 title={item.name}
                 description={
                   <FoodCardDescription
