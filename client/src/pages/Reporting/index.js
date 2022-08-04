@@ -59,7 +59,7 @@ const Reporting = () => {
           <div style={{margin: '16px'}}>
             <Title level={3}>Reporting</Title>
             <Form.Item label="Base date">
-              <DatePicker onChange={onFilterChange} defaultValue={moment()} />
+              <DatePicker showTime onChange={onFilterChange} defaultValue={moment()} />
             </Form.Item>
             <Tabs>
               <Tabs.TabPane tab="Food Week Comparison" key="1">

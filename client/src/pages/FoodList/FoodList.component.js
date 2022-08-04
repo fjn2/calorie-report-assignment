@@ -156,13 +156,17 @@ const FoodDetailComponent = ({
               />
             </Card>
           ))}
-          {items.length > 0 && hasMore && (
-            <Button onClick={onGetNextPage}>Get more items</Button>
-          )}
           {items.length === 0 && (
             <Empty />
           )}
+          <div style={{width: '100%', textAlign: 'center'}}>
+            {items.length > 0 && hasMore && (
+              <Button onClick={onGetNextPage}>Get more items</Button>
+            )}
+          </div>
+          
         </div>
+       
       </Content>
     </Layout>
   );

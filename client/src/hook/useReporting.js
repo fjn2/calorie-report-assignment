@@ -8,7 +8,9 @@ const useReporting = () => {
   const [avgNumberOfCaloriesPerUserReport, setAvgNumberOfCaloriesPerUserReport] = useState()
   const [foodEntryWeekComparisonReport, setFoodEntryWeekComparisonReport] = useState()
   
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState({
+    date: new Date().toISOString()
+  })
 
   useEffect(() => {
     setLoading(true)

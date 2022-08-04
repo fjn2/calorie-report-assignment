@@ -26,7 +26,7 @@
           FROM "FoodEntry"
           WHERE 
           "whenFoodWasTaken" < '${date}' 
-          AND "whenFoodWasTaken" > (TO_DATE('${date}', 'YYYY-MM-DD') - INTERVAL '7 DAY')
+          AND "whenFoodWasTaken" > (TO_TIMESTAMP('${date}', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') - INTERVAL '7 DAY')
           GROUP BY "dayOfTheWeek"
         ) thisweek
         FULL JOIN
@@ -34,8 +34,8 @@
           SELECT COUNT(*), EXTRACT('DOW' FROM "whenFoodWasTaken") as "dayOfTheWeek"
           FROM "FoodEntry"
           WHERE 
-          "whenFoodWasTaken" < (TO_DATE('${date}', 'YYYY-MM-DD') - INTERVAL '7 DAY')
-          AND "whenFoodWasTaken" > (TO_DATE('${date}', 'YYYY-MM-DD') - INTERVAL '14 DAY')
+          "whenFoodWasTaken" < (TO_TIMESTAMP('${date}', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') - INTERVAL '7 DAY')
+          AND "whenFoodWasTaken" > (TO_TIMESTAMP('${date}', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') - INTERVAL '14 DAY')
           GROUP BY "dayOfTheWeek"
         ) lastweek
         ON
@@ -64,7 +64,7 @@
       "FoodEntry" ON "FoodEntry"."userId" = "User"."id"
       WHERE 
       "whenFoodWasTaken" < '${date}' 
-      AND "whenFoodWasTaken" > (TO_DATE('${date}', 'YYYY-MM-DD') - INTERVAL '7 DAY')
+      AND "whenFoodWasTaken" > (TO_TIMESTAMP('${date}', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') - INTERVAL '7 DAY')
       GROUP BY
       "User"."id",
       "User"."name"
