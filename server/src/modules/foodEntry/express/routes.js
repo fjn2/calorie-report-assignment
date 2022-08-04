@@ -163,8 +163,6 @@ const getFoodEntryListRoute = ({ foodEntryService }) => async (req, res) => {
   } catch (e) {
     throw e
   }
-  
- 
 }
 
 module.exports = {

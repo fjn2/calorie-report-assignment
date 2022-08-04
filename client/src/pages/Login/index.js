@@ -13,6 +13,8 @@ const Login = () => {
     login(data).then((user) => {
       setUser(user)
       navigate(PAGES_ROLE[user.role][PAGES.FOOD_LIST])
+    }).catch(() => {
+      
     })
   }
 

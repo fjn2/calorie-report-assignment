@@ -134,7 +134,7 @@ const FoodDetailComponent = ({
                   )}
                   {item.hasReachSpendingLimit  && (
                     <Tooltip
-                      title={`You have expended ${item.totalSpendedInPeriod} in this month.`}
+                      title={`You have expended $ ${item.totalSpendedInPeriod} in this month.`}
                     >
                       <TagsFilled style={{
                         color: '#32bd39',

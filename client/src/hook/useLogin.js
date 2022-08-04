@@ -18,6 +18,7 @@ const useLogin = () => {
       notification.error({
         message: e.message
       })
+      throw e
     })
   }
   return {

@@ -111,11 +111,11 @@ const FoodDetailComponent = ({
                 <SelectUser />
               </Form.Item>
             )}
-            <Form.Item wrapperCol={{ ...formItemLayout, offset: 8 }}>
+            <Form.Item wrapperCol={{ ...formItemLayout }} style={{ textAlign: 'right' }}>
               <Button type="primary" htmlType="submit">
                 Save
               </Button>
-              <Link to={foodListPath}>
+              <Link to={foodListPath} style={{ marginLeft: '4px' }}>
                 <Button>
                   Cancel
                 </Button>
