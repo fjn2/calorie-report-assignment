@@ -10,7 +10,7 @@ const Profile = () => {
   const {
     user
   } = useApplication()
-  console.log('user', user)
+
   return (
     <>
       <MenuActionBar />

@@ -90,7 +90,7 @@ const useFoodList = () => {
   })
 
   const hasMore = (items || []).length < meta.count
-  console.log(hasMore, meta, items)
+
   return {
     createFood,
     deleteFood,
