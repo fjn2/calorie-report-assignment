@@ -121,7 +121,7 @@ const FoodDetailComponent = ({
               <span>{filters.userId && 'User' }</span>
               <span>{filters.userId && filters.dateFrom && ' - ' }</span>
               <span>{filters.dateFrom && 'Date' }</span>
-              {Object.keys(filters).length > 0 && (
+              {(filters.userId || filters.dateFrom) && (
                 <Button type="link" onClick={onCleanFilters}>Clean Filters</Button>
               )}
             </div>

@@ -31,8 +31,8 @@ const Login = ({ onLogin }) => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 initialValues={{
-                  email: 'federico@federico.com',
-                  password: '12345'
+                  // email: 'federico@federico.com',
+                  // password: '12345'
                 }}
                 autoComplete="off"
               >
