@@ -9,7 +9,7 @@ const SelectUser = ({
   const { items: users } = useUserList()
 
   return (
-    <Select onChange={onChange} value={value}>
+    <Select onChange={onChange} value={value} allowClear>
       {
         (users || []).map((user) => (
           <Select.Option value={user.id} key={user.id}>{user.name}</Select.Option>

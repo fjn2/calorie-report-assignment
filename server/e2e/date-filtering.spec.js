@@ -91,4 +91,16 @@ describe('Filtering by dates', () => {
     expect(response.status).toBe(200)
     expect(response.body.data.length).toBe(4)
   })
+
+  it('Admin should be able to filter product list for one particular user', async () => {
+    const accessTokenAdmin = await getAccessToken('admin@admin.com')
+
+    const response = await request(BASE_URL)
+      .get(`/food-entry?userId=${userId}`)
+      .set('authorization', `Bearer ${accessTokenAdmin}`)
+
+    expect(response.status).toBe(200)
+    expect(response.body.data.length).toBe(10)
+    expect(response.body.meta.count).toBe(10)
+  })
 })

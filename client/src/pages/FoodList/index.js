@@ -13,6 +13,7 @@ const FoodList = () => {
     getNextPage,
     hasMore,
     items,
+    meta,
     setFilters,
   } = useFoodList()
   
@@ -38,6 +39,7 @@ const FoodList = () => {
         filters={filters}
         hasMore={hasMore}
         items={items}
+        meta={meta}
         onFilterChange={onFilterChange}
         onGetNextPage={getNextPage}
         onItemAdd={onItemAdd}

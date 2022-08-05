@@ -45,6 +45,7 @@ const FoodEntryModule = (app) => {
   app.get(`${basePath}`, [
     query('take').default(10).toInt(),
     query('skip').default(0).toInt(),
+    query('userId').optional().toInt(),
     requestValidatorMidleware,
     getFoodEntryListRoute({ foodEntryService })
   ])

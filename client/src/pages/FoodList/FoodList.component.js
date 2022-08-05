@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { USER_TYPE } from '../../utils'
+import SelectUser from '../FoodDetail/components/SelectUser'
 
 const { Meta } = Card
 const { Content } = Layout
@@ -21,6 +22,11 @@ const getRangePickerValue = (filters) => {
     return [null, null]
   }
 }
+
+const formItemLayout = {
+  labelCol: { md: { span: 4 }, xs: { span: 6 } },
+  wrapperCol: { md: { span: 7 }, xs: { span: 18 }},
+};
 
 const FoodCardDescription = ({
   calories,
@@ -51,22 +57,35 @@ const FoodCardDescription = ({
 const FoodDetailComponent = ({
   basePath,
   filters,
+  hasMore,
   items = [],
+  meta,
   onFilterChange,
   onGetNextPage,
   onItemRemove,
   user,
-  hasMore
 }) => {
   const onDateChange = (data) => {
     if (!data) {
-      onCleanFilters()
+      onFilterChange({
+        ...filters,
+        dateFrom: undefined,
+        dateTo: undefined,
+      })
       return
     }
     const [dateFrom, dateTo] = data
     onFilterChange({
+      ...filters,
       dateFrom: dateFrom.toISOString(),
-      dateTo: dateTo.toISOString()
+      dateTo: dateTo.toISOString(),
+    })
+  }
+
+  const onUserChange = (userId) => {
+    onFilterChange({
+      ...filters,
+      userId
     })
   }
 
@@ -81,19 +100,34 @@ const FoodDetailComponent = ({
           <Title level={3}>Food List</Title>
         </div>
         <Card style={{margin: '16px'}}>
-          <Form.Item label="Date filter">
+          <Form.Item {...formItemLayout} label="Date filter">
             <RangePicker showTime onChange={onDateChange} value={getRangePickerValue(filters)} />
           </Form.Item>
+          {user.role === USER_TYPE.ADMIN && (
+            <Form.Item {...formItemLayout} label="User">
+              <SelectUser
+                onChange={onUserChange}
+                value={filters.userId}
+              />
+            </Form.Item>
+          )}
         </Card>
-        <div className="filter-section">
-            {
-              filters.dateFrom && (
-                <Form.Item label="You are filtering by Date" colon={false}>
-                  <Button type="link" onClick={onCleanFilters}>Clean Filters</Button>
-                </Form.Item>
-              )
-            }
+        <Card style={{ margin: '16px' }}>
+          <div style={{display: 'flex', "width": '100%'}}>
+            <div style={{ flex: '1 0 0' }}>
+              {(filters.userId || filters.dateFrom) && (
+                'Filtering by: '
+              )}
+              <span>{filters.userId && 'User' }</span>
+              <span>{filters.userId && filters.dateFrom && ' - ' }</span>
+              <span>{filters.dateFrom && 'Date' }</span>
+              {Object.keys(filters).length > 0 && (
+                <Button type="link" onClick={onCleanFilters}>Clean Filters</Button>
+              )}
+            </div>
+            <div style={{ flex: '0 0 25%', textAlign: 'right' }}>{meta && `There are ${meta.count}`} entries</div>
           </div>
+        </Card>
         <div className="card-list">
           {items.map((item) => (
             <Card
