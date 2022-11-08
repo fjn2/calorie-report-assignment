@@ -1,14 +1,14 @@
 version: '3'
 services:
-  toptal-assignment:
-     build: .
-     image: toptal-assignment
-     ports:
-       - "3333:3333"
-     depends_on:
-       - "database"
-     networks:
-       - my-app
+  # toptal-assignment:
+  #    build: .
+  #    image: toptal-assignment
+  #    ports:
+  #      - "3333:3333"
+  #    depends_on:
+  #      - "database"
+  #    networks:
+  #      - my-app
   database:
     container_name: postgres_dev
     image: "postgres" # use latest official postgres version

@@ -122,7 +122,12 @@ const deleteFoodEntryRoute = ({ foodEntryService }) => async (req, res, next) =>
     const { data: [foodEntry]} = await foodEntryService.getList({
       id: req.params.id 
     })
-    
+    if (!foodEntry) {
+      const error = new Error('Not found')
+      error.isProblemSpaceError = true
+      error.code = 404
+      throw error
+    }
     deletedFoodEntry = await foodEntryService.delete(foodEntry, req.auth)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
